@@ -75,10 +75,10 @@ class GoodreadsUser():
             owned_books = []
         return owned_books
 
-    def reviews(self, page=1):
+    def reviews(self, shelf="", page=1):
         """Get all books and reviews on user's shelves"""
         resp = self._client.session.get("/review/list.xml",
-                                        {'v': 2, 'id': self.gid, 'page': page})
+                {'v': 2, 'id': self.gid, 'page': page, 'per_page': 200, 'shelf': shelf})
         return [review.GoodreadsReview(r) for r in resp['reviews']['review']]
 
     def shelves(self, page=1):
